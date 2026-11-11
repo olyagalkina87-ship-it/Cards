@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f5bea">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Карточки">
+<title>Карточки: английский и словацкий</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#eef2f7;--card:#fff;--ink:#14213d;--mute:#5b6b85;--line:#d5dce8;--acc:#2f5bea;--acc-ink:#fff;--en:#2f5bea;--sk:#c8372d;--ok:#1f8a5b;--warn:#a86a00;--bad:#c8372d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1626;--card:#18223a;--ink:#e8edf7;--mute:#97a6c2;--line:#2b3957;--acc:#6f93ff;--acc-ink:#0f1626;--en:#6f93ff;--sk:#ff7b70;--ok:#4cc38a;--warn:#f0b254;--bad:#ff7b70}}
+:root[data-theme="dark"]{--bg:#0f1626;--card:#18223a;--ink:#e8edf7;--mute:#97a6c2;--line:#2b3957;--acc:#6f93ff;--acc-ink:#0f1626;--en:#6f93ff;--sk:#ff7b70;--ok:#4cc38a;--warn:#f0b254;--bad:#ff7b70}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Onest,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:480px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0}
+h2{font-size:17px;margin:24px 0 4px}
+header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.due{color:var(--mute);font-size:14px}
+nav,.chips{display:flex;gap:6px;margin-bottom:10px}
+nav button,.chips button{flex:1;padding:10px 4px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;font:inherit;font-size:14px;cursor:pointer}
+nav button.on,.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,textarea:focus-visible,select:focus-visible,.in:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 20px;text-align:center}
+.tag{font-size:13px;font-weight:700}
+.tag.en{color:var(--en)}.tag.sk{color:var(--sk)}
+.front{font-size:32px;font-weight:700;margin:18px 0 8px;overflow-wrap:anywhere}
+.back{font-size:26px;font-weight:700;margin:14px 0 6px;padding-top:16px;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.emo{font-size:64px;line-height:1.2;margin:8px 0}
+img.pic{display:block;margin:8px auto;max-width:100%;max-height:200px;border-radius:12px}
+.nt{white-space:pre-line;text-align:left;background:var(--bg);border-radius:10px;padding:10px 12px;font-size:15px;color:var(--mute);margin-top:10px}
+.res{font-weight:700;margin-top:14px}
+.res.ok{color:var(--ok)}.res.near{color:var(--warn)}.res.bad{color:var(--bad)}
+.btn{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:var(--acc);color:var(--acc-ink);font:inherit;font-weight:700;cursor:pointer;margin-top:12px}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.grades button{padding:10px 2px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.grades button.sug{border:2px solid var(--acc)}
+.grades small{display:block;color:var(--mute);font-size:12px}
+.say{border:0;background:none;color:var(--mute);font:inherit;font-size:14px;cursor:pointer;text-decoration:underline}
+textarea,select,.in{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;margin-top:12px}
+.lbl+.in,.lbl+select,.lbl+textarea{margin-top:4px}
+textarea{min-height:90px}
+.lbl{display:block;font-size:14px;color:var(--mute);margin-top:12px}
+details{margin-top:20px}summary{cursor:pointer;color:var(--mute);font-size:14px}
+.row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.row .m{flex:1;min-width:0;overflow-wrap:anywhere}
+.row small{color:var(--mute);display:block}
+.row button{border:0;background:none;color:var(--mute);font-size:20px;cursor:pointer;padding:4px 8px}
+.th{width:40px;height:40px;border-radius:8px;object-fit:cover;font-size:28px;text-align:center;line-height:40px;flex:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;text-align:center}
+.stats div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 4px;font-size:22px;font-weight:700}
+.stats small{display:block;font-size:12px;font-weight:400;color:var(--mute)}
+.note{color:var(--mute);font-size:14px;margin:8px 0}
+.empty{padding:36px 8px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pg>div,.opts{display:grid;gap:8px;align-content:start}.opts{margin:12px 0}
+.opt{padding:12px 8px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;overflow-wrap:anywhere}
+.opt.sel{border:2px solid var(--acc)}.opt.good{border:2px solid var(--ok)}.opt.bad{border:2px solid var(--bad)}
+.lts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}.lt{min-width:44px;height:48px;font-size:20px;padding:0 10px}
+.slots{font-size:28px;font-weight:700;margin:12px 0;min-height:40px}
+.grades button:disabled{opacity:.35}
+</style>
+</head>
+<body>
+<main>
+<header><h1>Карточки</h1><span class="due" id="due"></span></header>
+<nav id="nav"></nav>
+<div id="view"></div>
+</main>
+<script>
+var KEY='lc_v1',S,tab='study',lang='all',cur=null,res=null,ed=null,pimg='',foc=false,LN={en:'English',sk:'Slovenčina'};
+function mk(l,f,b,n,e,img){return{id:Date.now().toString(36)+(IDN++).toString(36)+Math.random().toString(36).slice(2,5),l:l,f:f,b:b,n:n||'',e:e||'',img:img||'',ef:2.5,reps:0,int:0,due:0}}
+function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}
+ if(!S||!S.cards)S={cards:[],log:{}};
+ S.dir=S.dir||'fr';S.nw=S.nw||{};S.lim=S.lim||20;
+ S.cards.forEach(c=>{if(c.n===undefined){c.n='';c.e='';c.img=''}});save()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){alert('Не хватило места в памяти браузера. Убери часть фото.')}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function $(i){return document.getElementById(i)}
+function day0(){var d=new Date();d.setHours(0,0,0,0);return d.getTime()}
+function today(){return new Date().toISOString().slice(0,10)}
+function inLang(c){return lang=='all'||c.l==lang}
+function dueList(){var n=Date.now(),left=Math.max(0,(S.lim||20)-(S.nw[today()]||0));
+ return S.cards.filter(function(c){return c.due>0&&c.due<=n&&inLang(c)}).sort(function(a,b){return a.due-b.due}).concat(S.cards.filter(function(c){return c.due===0&&inLang(c)}).slice(0,left))}
+function nxt(c,g,fz){var st=c.st||0,e0=c.ef,N=Date.now();
+ if(c.reps==0){
+  if(g==0)return{ef:e0,reps:0,int:0,st:0,due:N+6e4};
+  if(g==1)return{ef:e0,reps:0,int:0,st:st,due:N+(st?10:6)*6e4};
+  if(g==2&&!st)return{ef:e0,reps:0,int:0,st:1,due:N+6e5};
+  var j=c.rl?(g==3?c.rl+Math.max(1,Math.round(c.rl*.3)):c.rl):(g==3?3:1);return{ef:e0,reps:1,int:j,st:0,rl:0,due:N+j*864e5}}
+ if(g==0)return{ef:Math.max(1.3,e0-.2),reps:0,int:0,st:1,rl:Math.max(1,Math.round(c.int*.5)),lp:(c.lp||0)+1,due:N+6e5};
+ var ef=g==1?Math.max(1.3,e0-.15):g==3?e0+.15:e0,i;
+ if(c.reps==1&&c.int<=3)i=g==1?3:g==2?6:8;
+ else i=g==1?Math.max(c.int+1,Math.round(c.int*1.2)):g==2?Math.max(c.int+1,Math.round(c.int*ef)):Math.max(c.int+2,Math.round(c.int*ef*1.3));
+ i=Math.min(i,365);if(fz&&i>=7)i=Math.max(c.int+1,Math.round(i*(.95+Math.random()*.1)));
+ return{ef:ef,reps:c.reps+1,int:i,st:0,due:N+i*864e5}}
+function fmt(c,g){var n=nxt(c,g);if(!n.reps)return'<'+Math.max(1,Math.round((n.due-Date.now())/6e4))+' мин.';return n.int<30?n.int+' дн.':Math.round(n.int/30)+' мес.'}
+function nz(s){return s.toLowerCase().replace(/ё/g,'е').replace(/[.,!?¿;:"«»]/g,'').replace(/\s+/g,' ').trim()}
+function ds(s){return nz(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function lev(a,b){var p=[],i,j,pr,t;for(j=0;j<=b.length;j++)p[j]=j;for(i=1;i<=a.length;i++){pr=p[0];p[0]=i;for(j=1;j<=b.length;j++){t=p[j];p[j]=Math.min(p[j]+1,p[j-1]+1,pr+(a[i-1]==b[j-1]?0:1));pr=t}}return p[b.length]}
+function check(inp){
+ var fr=S.dir=='fr',ex=fr?cur.b:cur.f,opts=[ex].concat(fr?ex.split(/[,;\/]/):[]),a=nz(inp);
+ if(!a)return 0;
+ if(opts.some(function(o){return nz(o)==a}))return 2;
+ if(opts.some(function(o){var x=ds(o),y=ds(a);return x==y||(x.length>4&&lev(x,y)<=1)}))return 1;
+ return 0}
+function ans(){res={v:check($('ai').value),a:$('ai').value.trim()};render()}
+function skip(){res={v:-1,a:''};render()}
+function grade(g){if(cur.due===0)S.nw[today()]=(S.nw[today()]||0)+1;Object.assign(cur,nxt(cur,g,1));var t=today();S.log[t]=(S.log[t]||0)+1;save();cur=null;res=null;foc=true;render()}
+function say(){var u=new SpeechSynthesisUtterance(cur.f);u.lang=cur.l=='en'?'en-GB':'sk-SK';u.rate=.9;try{speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function setTab(t){tab=t;cur=null;res=null;ed=null;pimg='';render()}
+function setLang(l){lang=l;cur=null;res=null;render()}
+function setLim(v){S.lim=+v;save();cur=null;res=null;render()}
+function setDir(d){S.dir=d;save();cur=null;res=null;render()}
+function edit(id){ed=id;pimg=IMG[id]||S.cards.filter(function(c){return c.id==id})[0].img||'';tab='add';cur=null;res=null;render()}
+function pick(inp){var f=inp.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,320/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);pimg=cv.toDataURL('image/jpeg',.7);prev()};im.src=r.result};r.readAsDataURL(f)}
+function prev(){$('pv').innerHTML=pimg?'<img class="pic" alt="" src="'+pimg+'"><button class="say" onclick="pimg=\'\';prev()">Убрать фото</button>':''}
+function saveCard(){var g=function(i){return $(i).value.trim()},f=g('af'),b=g('ab'),was=ed;
+ if(!f||!b){$('msg').textContent='Заполни слово и перевод';return}
+ if(ed){var c=S.cards.filter(function(x){return x.id==ed})[0];c.l=g('al');c.f=f;c.b=b;c.n=g('an');c.e=g('ae');c.img='';if(pimg){IMG[c.id]=pimg;idbSet(c.id,pimg)}else if(IMG[c.id]){delete IMG[c.id];idbDel(c.id)}}
+ else S.cards.push(mk(g('al'),f,b,g('an'),g('ae'),pimg));
+ ed=null;pimg='';save();tab=was?'words':'add';render();if(!was)$('msg').textContent='Добавлено'}
+function parse(t){
+ t=t.replace(/([а-яёa-z\.\)])(?=[A-Z][A-Za-z’' ]{1,30}?\s*(?:\([^)]*\))?\s*[-–—]\s)/g,'$1\n').replace(/([а-яё\)])\s+(?=[A-Z][A-Za-z’' ]{0,30}?\s*(?:\([^)]*\))?\s+[-–—]\s)/g,'$1\n');
+ var out=[],bad=0;
+ t.split('\n').forEach(function(s){s=s.trim();if(!s)return;
+  var ex=s.split('|'),m=ex[0].match(/^(.+?)\s*[-–—]\s+(.+)$/);
+  if(!m){bad++;return}
+  var f=m[1].trim(),r=m[2].trim(),pr=[],nt=ex.slice(1).map(function(x){return x.trim()}).filter(Boolean);
+  f=f.replace(/\(([А-Яа-яЁё\s]+)\)/,function(_,p){pr.push(p.trim());return''}).trim();
+  r=r.replace(/\s*\(([А-Яа-яЁё\s]+)\)\s*$/,function(_,p){pr.push(p.trim());return''}).trim();
+  var k=r.match(/^(.*?[А-Яа-яЁё\)\.,!?])\s+([A-Za-z].*)$/);
+  if(k){r=k[1];nt.unshift(k[2].trim())}
+  if(pr.length)nt.unshift('Произношение: '+pr.join(', '));
+  if(f&&r)out.push([f,r,nt]);else bad++});
+ return{out:out,bad:bad}}
+function bulk(){var l=$('al').value,p=parse($('at').value),a=0,u=0;
+ p.out.forEach(function(x){var c=S.cards.filter(function(k){return k.l==l&&k.f.toLowerCase()==x[0].toLowerCase()})[0],ch=false;
+  if(!c){S.cards.push(mk(l,x[0],x[1],x[2].join('\n')));a++;return}
+  if(c.b.toLowerCase().indexOf(x[1].toLowerCase())<0){c.b+='; '+x[1];ch=true}
+  x[2].forEach(function(z){if(c.n.indexOf(z)<0){c.n+=(c.n?'\n':'')+z;ch=true}});
+  if(ch)u++});
+ save();render();$('msg').textContent='Добавлено: '+a+', обновлено: '+u+(p.bad?'. Пропущено строк без « - »: '+p.bad:'')}
+function del(id){S.cards=S.cards.filter(function(c){return c.id!=id});save();render()}
+function exp(){$('bk').value=JSON.stringify(S)}
+function imp(){try{var d=JSON.parse($('bk').value);if(d&&d.cards){S=d;S.nw=S.nw||{};S.dir=S.dir||'fr';S.lim=S.lim||20;save();render();alert('Готово')}}catch(e){alert('Не получилось прочитать данные')}}
+function notif(){if(!('Notification' in window)){alert('Этот браузер не поддерживает уведомления');return}Notification.requestPermission().then(render)}
+function wipe(){if(confirm('Удалить все слова и весь прогресс? Это нельзя отменить.')){S.cards=[];S.log={};S.nw={};S.xp=0;save();IMG={};try{indexedDB.deleteDatabase('lc_img')}catch(e){}cur=null;res=null;render()}}
+function ping(){var n=dueList().length;
+ document.title=(n?'('+n+') ':'')+'Карточки';
+ if(n&&'Notification' in window&&Notification.permission=='granted'){var last=0;try{last=+localStorage.getItem('lc_ping')||0}catch(e){}
+  if(Date.now()-last>3*36e5){try{localStorage.setItem('lc_ping',Date.now())}catch(e){}new Notification('Пора повторять',{body:'Карточек к повторению: '+n})}}}
+function chips(a,sel,fn){return'<div class="chips">'+a.map(function(p){return'<button class="'+(sel==p[0]?'on':'')+'" onclick="'+fn+'(\''+p[0]+'\')">'+p[1]+'</button>'}).join('')+'</div>'}
+function pic(c,cls){var u=IMG[c.id]||c.img;return u?'<img class="'+(cls||'pic')+'" alt="" src="'+u+'">':c.e?'<div class="'+(cls?cls:'emo')+'">'+c.e+'</div>':''}
+function render(){
+ var d=dueList(),v=$('view'),h='';
+ $('due').textContent='К повторению: '+d.length;
+ $('nav').innerHTML=[['study','Учить'],['games','Игры'],['add',ed?'Изменить':'Добавить'],['words','Слова']].map(function(p){return'<button class="'+(tab==p[0]?'on':'')+'" onclick="setTab(\''+p[0]+'\')">'+p[1]+'</button>'}).join('');
+ if(tab=='study'){
+  h=chips([['all','Все'],['en','English'],['sk','Slovenčina']],lang,'setLang')+chips([['fr','Вспомнить перевод'],['to','Написать слово']],S.dir=='fr'?'fr':'to','setDir');
+  if(!cur&&d.length)cur=d[0];
+  if(!cur){var nx=S.cards.filter(function(c){return inLang(c)&&c.due>0}).map(function(c){return c.due}).sort(function(a,b){return a-b})[0],NL=S.cards.filter(function(c){return inLang(c)&&c.due===0}).length;
+   h+='<div class="card empty"><div class="front">Всё повторено</div><div class="note">'+(NL?'Новые слова на сегодня закончились, в очереди ещё '+NL+'. Лимит можно поднять во вкладке «Слова».':nx?'Следующая карточка: '+new Date(nx).toLocaleString('ru',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}):'Добавь первые слова во вкладке «Добавить».')+'</div></div>'}
+  else{
+   var fr=S.dir=='fr',q=fr?cur.f:cur.b,ex=fr?cur.b:cur.f;
+   h+='<div class="card"><span class="tag '+cur.l+'">'+LN[cur.l]+'</span><div class="front">'+esc(q)+'</div>';
+   if(fr)h+='<button class="say" onclick="say()">Послушать</button>';
+   if(!res){
+    h+='</div><input id="ai" class="in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Ответ" placeholder="'+(fr?'Перевод на русский':'Слово на '+(cur.l=='en'?'английском':'словацком'))+'" onkeydown="if(event.key===\'Enter\')ans()"><button class="btn" onclick="ans()">Проверить</button><button class="btn alt" onclick="skip()">Не помню</button>'}
+   else{
+    if(res.v>=0){var m=res.v==2?['ok','Верно']:res.v==1?['near','Почти, проверь написание']:['bad','Неверно'];h+='<div class="res '+m[0]+'">'+m[1]+(res.v<2&&res.a?'. Ты написал: '+esc(res.a):'')+'</div>'}
+    h+='<div class="back">'+esc(ex)+'</div>'+(fr?'':'<button class="say" onclick="say()">Послушать</button>')+pic(cur)+(cur.n?'<div class="nt">'+esc(cur.n)+'</div>':'')+(cur.lp>=4?'<div class="nt">Ты забывал это слово '+cur.lp+' раз. Придумай свою ассоциацию или картинку и запиши в заметку (кнопка ✎ в «Слова»).</div>':'')+'</div>';
+    var sug=res.v==2?2:res.v==1?1:0;
+    h+='<div class="grades">'+['Снова','Трудно','Хорошо','Легко'].map(function(t,i){return'<button class="'+(i==sug?'sug':'')+'"'+(i>res.v+1?' disabled':'')+' onclick="grade('+i+')">'+t+'<small>'+fmt(cur,i)+'</small></button>'}).join('')+'</div>'}}
+  var t=S.log[today()]||0,lr=S.cards.filter(function(c){return c.int>=21}).length;
+  h+='<div class="stats"><div>'+t+'<small>сегодня</small></div><div>'+S.cards.length+'<small>всего слов</small></div><div>'+lr+'<small>выучено</small></div></div>'}
+ else if(tab=='games'){gameView();return}
+ else if(tab=='add'){
+  var c=ed?S.cards.filter(function(x){return x.id==ed})[0]:{l:'en',f:'',b:'',n:'',e:''};
+  h='<label class="lbl" for="al" style="margin-top:0">Язык</label><select id="al"><option value="en"'+(c.l=='en'?' selected':'')+'>English</option><option value="sk"'+(c.l=='sk'?' selected':'')+'>Slovenčina</option></select>'+
+  '<label class="lbl" for="af">Слово или фраза</label><input id="af" class="in" type="text" value="'+esc(c.f)+'">'+
+  '<label class="lbl" for="ab">Перевод</label><input id="ab" class="in" type="text" value="'+esc(c.b)+'">'+
+  '<label class="lbl" for="an">Заметка: как используется, популярные выражения</label><textarea id="an">'+esc(c.n)+'</textarea>'+
+  '<label class="lbl" for="ae">Эмодзи по смыслу</label><input id="ae" class="in" type="text" maxlength="8" placeholder="🍞" value="'+esc(c.e)+'">'+
+  '<label class="lbl" for="ap">Или своё фото</label><input id="ap" class="in" type="file" accept="image/*" onchange="pick(this)"><div id="pv"></div>'+
+  '<button class="btn" onclick="saveCard()">'+(ed?'Сохранить':'Добавить')+'</button>'+(ed?'<button class="btn alt" onclick="setTab(\'words\')">Отмена</button>':'')+'<div class="note" id="msg"></div>'+
+  (ed?'':'<details open><summary>Импорт из заметок</summary><textarea id="at" placeholder="neighbour - сосед&#10;zajtra - завтра"></textarea><button class="btn alt" onclick="bulk()">Импортировать</button><div class="note">Вставь список целиком: слово (произношение) - перевод пример. Язык берётся из поля «Язык» выше, английский и словацкий вставляй по отдельности. Несколько примеров добавляются через « | »: слово - перевод | пример 1 | пример 2. Если слово уже есть, перевод и примеры дописываются к нему.</div></details>');
+  v.innerHTML=h;prev();return}
+ else{
+  h=chips([['all','Все'],['en','English'],['sk','Slovenčina']],lang,'setLang')+S.cards.filter(inLang).map(function(c){return'<div class="row">'+(pic(c,'th')||'<div class="th"></div>')+'<div class="m"><b>'+esc(c.f)+'</b> <span class="tag '+c.l+'">'+c.l.toUpperCase()+'</span><small>'+esc(c.b)+'</small></div><button aria-label="Изменить" onclick="edit(\''+c.id+'\')">✎</button><button aria-label="Удалить" onclick="del(\''+c.id+'\')">×</button></div>'}).join('');
+  var ok='Notification' in window&&Notification.permission=='granted';
+  h+='<h2>Новых слов в день</h2><select id="lim" aria-label="Новых слов в день" onchange="setLim(this.value)">'+[10,20,30,50,100,200,300,400].map(function(n){return'<option'+(S.lim==n?' selected':'')+'>'+n+'</option>'}).join('')+'</select><div class="note">Новых слов в очереди: '+S.cards.filter(c=>c.due===0).length+', это примерно '+Math.ceil(S.cards.filter(c=>c.due===0).length/S.lim)+' дн. при таком лимите. Повторения старых слов не ограничены.</div><h2>Уведомления</h2><div class="note">Напоминание приходит, пока страница открыта в браузере, даже в фоновой вкладке. Когда она закрыта, уведомлений не будет.</div><button class="btn alt" onclick="notif()">'+(ok?'Уведомления включены':'Включить уведомления')+'</button>'+
+  '<h2>Очистка</h2><div class="note">Удалит все слова и прогресс на этом устройстве. Сначала сделай резервную копию.</div><button class="btn alt" onclick="wipe()">Удалить все слова</button><h2>Резервная копия</h2><div class="note">Данные хранятся только в этом браузере. Скопируй текст и сохрани в заметках.</div><textarea id="bk" aria-label="Резервная копия"></textarea><div style="display:flex;gap:8px"><button class="btn alt" onclick="exp()">Показать данные</button><button class="btn alt" onclick="imp()">Восстановить</button></div>'}
+ v.innerHTML=h;
+ if(foc){var i=$('ai');if(i)i.focus();foc=false}
+}
+var IDN=0;
+var G={m:null};
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function pool(f){return S.cards.filter(c=>inLang(c)&&(!f||f(c)))}
+function xp(n){S.xp=(S.xp||0)+n;save()}
+function iso(d){return d.toISOString().slice(0,10)}
+function streak(){var d=new Date(),n=0;if(!S.log[iso(d)])d.setDate(d.getDate()-1);while(S.log[iso(d)]){n++;d.setDate(d.getDate()-1)}return n}
+function gStop(){G={m:null};render()}
+function gStart(n){G={m:['pairs','quiz','letters'][n]};if(pool().length<4){G={m:null};alert('Нужно хотя бы 4 слова на выбранном языке');return}
+ if(n==0)gPairs();if(n==1)gQuiz();if(n==2)gLet();render()}
+function gameView(){
+ var x=S.xp||0,h=chips([['all','Все'],['en','English'],['sk','Slovenčina']],lang,'setLang')+'<div class="stats" style="margin-top:0"><div>'+(1+Math.floor(x/100))+'<small>уровень</small></div><div>'+x+'<small>очки</small></div><div>'+streak()+'<small>дней подряд</small></div></div>';
+ if(!G.m)h+=[['Пары','Соединяй слова с переводами на скорость'],['Выбор','10 вопросов, 3 жизни, серия даёт бонус'],['Буквы','Собери слово из перемешанных букв']].map((g,i)=>'<button class="btn alt" style="text-align:left" onclick="gStart('+i+')"><b>'+g[0]+'</b><br><small>'+g[1]+'</small></button>').join('')+'<div class="note">Очки только тебе, без рейтингов. «Дни подряд» считаются по вкладке «Учить».</div>';
+ else h+=G.m=='pairs'?vPairs():G.m=='quiz'?vQuiz():vLet();
+ $('view').innerHTML=h}
+function gPairs(){G.it=shuf(pool()).slice(0,6);G.L=shuf(G.it);G.R=shuf(G.it);G.a=G.b=null;G.d={};G.e=0;G.t0=Date.now();G.fin=0}
+function gPick(s,i){if(G.fin)return;var c=(s?G.R:G.L)[i],k=s?'b':'a';G[k]=G[k]==c.id?null:c.id;
+ if(G.a&&G.b){if(G.a==G.b){G.d[G.a]=1;xp(10);if(Object.keys(G.d).length==G.it.length){G.fin=1;G.sec=Math.round((Date.now()-G.t0)/1000);if(!G.e&&G.sec<40)xp(20)}}else G.e++;G.a=G.b=null}
+ render()}
+function vPairs(){if(G.fin)return'<div class="card"><div class="front">Готово!</div><div class="note">Время: '+G.sec+' с, ошибок: '+G.e+(!G.e&&G.sec<40?'. Бонус +20':'')+'</div></div><button class="btn" onclick="gStart(0)">Ещё раунд</button><button class="btn alt" onclick="gStop()">В меню</button>';
+ var col=(arr,s,k)=>arr.map((c,i)=>'<button class="opt'+(G[s?'b':'a']==c.id?' sel':'')+'"'+(G.d[c.id]?' disabled style="visibility:hidden"':'')+' onclick="gPick('+s+','+i+')">'+esc(c[k])+'</button>').join('');
+ return'<div class="pg"><div>'+col(G.L,0,'f')+'</div><div>'+col(G.R,1,'b')+'</div></div><div class="note">Ошибок: '+G.e+'</div><button class="btn alt" onclick="gStop()">В меню</button>'}
+function gQuiz(){G.q=shuf(pool()).slice(0,10);G.i=0;G.lv=3;G.s=0;G.sc=0;G.ok=0;G.na=0;gQ()}
+function gQ(){var c=G.q[G.i],k=S.dir=='fr'?'b':'f';G.o=shuf([c].concat(shuf(pool(x=>x.id!=c.id&&x[k]!=c[k])).slice(0,3)));G.a=null}
+function gAns(i){if(G.a!=null)return;G.a=i;G.na++;var ok=G.o[i].id==G.q[G.i].id;if(ok){G.s++;G.ok++;var p=10+Math.min(G.s,5)*2;G.sc+=p;xp(p)}else{G.lv--;G.s=0}
+ render();setTimeout(()=>{if(G.m!='quiz')return;G.i++;if(G.lv<=0||G.i>=G.q.length)G.fin=1;else gQ();render()},ok?700:1400)}
+function vQuiz(){if(G.fin)return'<div class="card"><div class="front">+'+G.sc+'</div><div class="note">Верно: '+G.ok+' из '+G.na+'</div></div><button class="btn" onclick="gStart(1)">Ещё раз</button><button class="btn alt" onclick="gStop()">В меню</button>';
+ var c=G.q[G.i],fr=S.dir=='fr',k=fr?'b':'f';
+ return'<div class="note">'+'♥'.repeat(G.lv)+' · '+(G.i+1)+'/'+G.q.length+(G.s>1?' · серия '+G.s:'')+'</div><div class="card"><span class="tag '+c.l+'">'+LN[c.l]+'</span><div class="front">'+esc(fr?c.f:c.b)+'</div></div><div class="opts">'+G.o.map((o,i)=>'<button class="opt'+(G.a!=null?(o.id==c.id?' good':i==G.a?' bad':''):'')+'" onclick="gAns('+i+')">'+esc(o[k])+'</button>').join('')+'</div><button class="btn alt" onclick="gStop()">Выйти</button>'}
+function gLet(){var p=pool(c=>/^\S{3,12}$/.test(c.f));if(!p.length){G={m:null};alert('Нужны слова без пробелов');return}
+ G.c=shuf(p)[0];G.w=G.c.f.toLowerCase();G.l=shuf(G.w.split(''));G.t=[];G.msg='';G.hint=0;G.won=0}
+function gTap(i){if(G.won||G.t.includes(i))return;G.t.push(i);gChk();render()}
+function gChk(){if(G.t.length<G.w.length)return;if(G.t.map(i=>G.l[i]).join('')==G.w){G.won=1;G.n=(G.n||0)+1;xp(G.hint?5:15)}else{G.t=[];G.msg='Не то, попробуй ещё'}}
+function gBack(){G.t.pop();G.msg='';render()}
+function gHint(){if(G.won)return;var k=0;while(k<G.t.length&&G.l[G.t[k]]==G.w[k])k++;G.t=G.t.slice(0,k);var j=G.l.findIndex((ch,i)=>ch==G.w[k]&&!G.t.includes(i));if(j>=0)G.t.push(j);G.hint=1;gChk();render()}
+function vLet(){var c=G.c,s=G.t.map(i=>G.l[i]).join(''),sl=(s+'_'.repeat(G.w.length-s.length)).split('').join(' ');
+ return'<div class="card"><span class="tag '+c.l+'">'+LN[c.l]+'</span><div class="front" style="font-size:26px">'+esc(c.b)+'</div>'+pic(c)+'<div class="slots">'+esc(sl)+'</div>'+(G.won?'<div class="res ok">Верно!</div>'+(c.n?'<div class="nt">'+esc(c.n)+'</div>':''):'<div class="res bad">'+esc(G.msg)+'</div>')+'</div>'+(G.won?'<button class="btn" onclick="gLet();render()">Дальше</button>':'<div class="lts">'+G.l.map((ch,i)=>'<button class="opt lt" '+(G.t.includes(i)?'disabled style="opacity:.3" ':'')+'onclick="gTap('+i+')">'+esc(ch)+'</button>').join('')+'</div><div style="display:flex;gap:8px"><button class="btn alt" style="margin:0" onclick="gBack()">Стереть</button><button class="btn alt" style="margin:0" onclick="gHint()">Подсказка</button></div>')+'<div class="note">Угадано: '+(G.n||0)+'</div><button class="btn alt" onclick="gStop()">В меню</button>'}
+var IMG={};
+function idb(){return new Promise((ok,no)=>{var r=indexedDB.open('lc_img',1);r.onupgradeneeded=()=>r.result.createObjectStore('i');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
+function idbSet(id,v){return idb().then(d=>new Promise((ok,no)=>{var t=d.transaction('i','readwrite');t.objectStore('i').put(v,id);t.oncomplete=ok;t.onerror=no}))}
+function idbDel(id){return idb().then(d=>{d.transaction('i','readwrite').objectStore('i').delete(id)}).catch(()=>{})}
+function idbAll(){return idb().then(d=>new Promise((ok,no)=>{var o={},r=d.transaction('i').objectStore('i').openCursor();r.onsuccess=e=>{var c=e.target.result;if(c){o[c.key]=c.value;c.continue()}else ok(o)};r.onerror=no}))}
+function initImg(){idbAll().then(o=>{IMG=o;S.cards.forEach(c=>{if(c.img){IMG[c.id]=c.img;idbSet(c.id,c.img).then(()=>{c.img='';save()})}});render()}).catch(()=>{})}
+load();render();ping();initImg();setInterval(function(){ping();if(!cur&&tab=='study')render()},6e4);
+</script>
+<script>if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})</script>
+</body>
+</html>
